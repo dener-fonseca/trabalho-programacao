@@ -1,0 +1,146 @@
+# Classe que representa o cartão do paciente e funciona como um nodo da lista encadeada.
+
+class CartaoPaciente:
+  def __init__(self, numero, cor):
+    self.numero = numero
+    self.cor = cor
+    self.proximo = None
+
+# Classe que representa a fila de pacientes e controla os pacientes que estarão aguardando atendimento.
+
+class FilaPacientes:
+  def __init__(self):
+    self.head = None
+    self.numeroVerde = 1
+    self.numeroAmarelo = 201
+  
+  # Método que insere um cartão de paciente verde no final da fila, pois não possui prioridade.
+  
+  def inserirSemPrioridade(self, cartaoPaciente):
+    atual = self.head
+    
+    while atual.proximo is not None:
+      atual = atual.proximo
+    
+    atual.proximo = cartaoPaciente
+
+  # Método que insere um cartão de paciente amarelo antes dos cartões verdes, por ser prioridade.
+
+  def inserirComPrioridade(self, cartaoPaciente):
+    if self.head is None or self.head.cor == "V":
+      cartaoPaciente.proximo = self.head
+      self.head = cartaoPaciente
+      return
+    
+    atual = self.head 
+    
+    while atual.proximo is not None and atual.proximo.cor == "A":
+        atual = atual.proximo 
+    
+    cartaoPaciente.proximo = atual.proximo
+    atual.proximo = cartaoPaciente
+
+  # Método para solicitar a cor para a criação do cartão do paciente e o insere na lista.
+
+  def inserir(self):
+    while True:
+      print("\n----- Menu de Cadastro de Pacientes -----")
+      
+      print("Informe a cor do cartão do paciente:")
+    
+      print("V - Verde (Atendimento Normal)")
+    
+      print("A - Amarelo (Prioridade)")
+    
+      cor = input("Digite a opção desejada: ").upper()
+    
+      if cor == "V" or cor == "A":
+        break
+      
+      print("\nOpção inválida. Informe V para Verde ou A para Amarelo.")
+      
+    if cor == "V":
+      numero = self.numeroVerde
+      self.numeroVerde += 1
+    
+    elif cor == "A":
+      numero = self.numeroAmarelo
+      self.numeroAmarelo += 1
+    
+    cartaoPaciente = CartaoPaciente(numero, cor)
+  
+    if self.head is None:
+      self.head = cartaoPaciente
+  
+    elif cor == "V":
+      self.inserirSemPrioridade(cartaoPaciente)
+  
+    elif cor == "A":
+      self.inserirComPrioridade(cartaoPaciente)
+  
+    print(f"\nPaciente com cartão {cor}-{numero} inserido na fila com sucesso.")
+  
+  # Método que imprime toda a lista de pacientes.
+  
+  def imprimirListaEspera(self):
+    if self.head is None:
+      print("\nA fila de pacientes está vazia.")
+    
+      return
+  
+    atual = self.head
+  
+    print("\n----- Lista de Espera de Pacientes -----")
+  
+    while atual is not None:
+      print(f"Cartão: {atual.cor}-{atual.numero}")
+    
+      atual = atual.proximo
+
+  # Método que chama o primeiro paciente da fila de espera para atendimento e depois o remove da fila.
+
+  def atenderPaciente(self):
+    if self.head is None:
+      print("\nNão existem mais pacientes na fila de espera para atendimento.")
+      return
+    
+    paciente = self.head
+    self.head = self.head.proximo
+    
+    print(f"\nPaciente com cartão {paciente.cor}-{paciente.numero} chamado para atendimento.")
+
+# Função que apresenta e controla o menu de atendimento do hospital.
+    
+def menuAtendimento():
+  filaPacientes = FilaPacientes()
+  
+  while True:
+    print("\n---- Menu de Atendimento de Pacientes ----")
+    
+    print("1 - Adicionar paciente na fila de espera para atendimento.")
+    
+    print("2 - Mostrar todos os pacientes que estão na fila de espera para atendimento.")
+    
+    print("3 - Chamar o próximo paciente para atendimento.")
+    
+    print("4 - Sair do programa de atendimento.")
+    
+    opcao = input("Escolha uma das opções acima: ")
+    
+    if opcao == "1":
+      filaPacientes.inserir()
+      
+    elif opcao == "2":
+      filaPacientes.imprimirListaEspera()
+      
+    elif opcao == "3":
+      filaPacientes.atenderPaciente()
+      
+    elif opcao == "4":
+      print("\nO programa foi encerrado.")
+      break
+    
+    else:
+      print("\nOpção Inválida. Escolha entre uma das opções acima.")
+
+menuAtendimento()
