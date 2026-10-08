@@ -1,6 +1,6 @@
-# Trabalhos de Programação — UNINTER
+# Trabalho de Programação — UNINTER
 
-Repositório destinado aos trabalhos e atividades de programação desenvolvidos durante minha graduação na **UNINTER**.
+Repositório destinado à atividade prática realizada para a disciplina de Programação III, desenvolvida durante minha graduação em Engenharia de Software na **UNINTER**.
 
 Os projetos deste repositório foram desenvolvidos em **Python**, com foco no aprendizado e na aplicação de conceitos de **estruturas de dados**, especialmente listas encadeadas e tabelas hash.
 
@@ -65,10 +65,10 @@ O programa permite:
 
 **UNINTER — Centro Universitário Internacional**
 
-Repositório criado para fins acadêmicos e para registro dos trabalhos desenvolvidos durante o curso.
+Repositório criado para fins acadêmicos e para registro dos trabalhos desenvolvidos durante a graduação de Engenharia de Software.
 
 ---
 
 ## 👨‍💻 Autor
 
-**Dener Fonseca**
+**Dener Xisto da Fonseca**
