@@ -1,0 +1,122 @@
+# Classe que representa um estado e será um nodo na lista encadeada.
+
+class Estado:
+  def __init__(self, sigla, nomeEstado):
+    self.sigla = sigla
+    self.nomeEstado = nomeEstado
+    self.proximo = None
+    
+# Classe que representa uma lista encadeada que receberá os estados.
+
+class ListaEncadeada:
+  def __init__(self):
+    self.head = None
+
+  def inserirInicio(self, sigla, nomeEstado):
+    novo = Estado(sigla, nomeEstado)
+    novo.proximo = self.head
+    self.head = novo
+
+  def imprimir(self):
+    atual = self.head
+    
+    while atual is not None:
+      print(atual.sigla, end = " --> ")
+      
+      atual = atual.proximo
+      
+    print("None")
+    
+# Classe que representa a tabela hash e coloca os estados em listas encadeadas dentro das posições da tabela.
+
+class TabelaHash:
+  def __init__(self):
+    self.tabelaHash = [None] * 10
+    
+    for i in range(10):
+      self.tabelaHash[i] = ListaEncadeada()
+      
+  def funcaoHash(self, sigla):
+    sigla = sigla.upper()
+    
+    if sigla == "DF":
+      return 7
+    
+    char1 = ord(sigla[0])
+    char2 = ord(sigla[1])
+    
+    posicao = (char1 + char2) % 10
+    
+    return posicao
+    
+  def inserir(self, sigla, nomeEstado):
+    
+    posicao = self.funcaoHash(sigla)
+    
+    self.tabelaHash[posicao].inserirInicio(sigla, nomeEstado)
+    
+  def imprimir(self):
+    for i in range(10):
+      print(f"Posição {i}: ", end = "")
+      
+      self.tabelaHash[i].imprimir()
+
+# Lista com os 26 estados brasileiros e o Distrito Federal que serão colocados na lista.
+
+estados = [
+    ("AC", "Acre"),
+    ("AL", "Alagoas"),
+    ("AP", "Amapá"),
+    ("AM", "Amazonas"),
+    ("BA", "Bahia"),
+    ("CE", "Ceará"),
+    ("DF", "Distrito Federal"),
+    ("ES", "Espírito Santo"),
+    ("GO", "Goiás"),
+    ("MA", "Maranhão"),
+    ("MT", "Mato Grosso"),
+    ("MS", "Mato Grosso do Sul"),
+    ("MG", "Minas Gerais"),
+    ("PA", "Pará"),
+    ("PB", "Paraíba"),
+    ("PR", "Paraná"),
+    ("PE", "Pernambuco"),
+    ("PI", "Piauí"),
+    ("RJ", "Rio de Janeiro"),
+    ("RN", "Rio Grande do Norte"),
+    ("RS", "Rio Grande do Sul"),
+    ("RO", "Rondônia"),
+    ("RR", "Roraima"),
+    ("SC", "Santa Catarina"),
+    ("SP", "São Paulo"),
+    ("SE", "Sergipe"),
+    ("TO", "Tocantins")
+]
+
+tabelaHash = TabelaHash()
+
+# Primeira exigência sobre o print com a tabela hash vazia.
+
+print("\n--- --- --- Tabela Hash Vazia --- --- ---")
+
+tabelaHash.imprimir()
+
+# Segunda exigência sobre o print com a tabela hash com os 26 estados e o Distrito Federal.
+
+for sigla, nomeEstado in estados:
+  tabelaHash.inserir(sigla, nomeEstado)
+  
+print("\n--- --- Tabela Hash com a Inserção dos 26 Estados e o Distrito Federal --- ---")
+
+tabelaHash.imprimir()
+
+# Terceira exigência sobre o print com a tabela hash com os 26 estados, o Distrito Federal e o estado fictício sendo meu nome.
+
+siglaFicticia = "DF"
+nomeFicticio = "Dener Fonseca"
+
+tabelaHash.inserir(siglaFicticia, nomeFicticio)
+
+print("\n--- Tabela Hash com a Inserção dos 26 Estados, o Distrito Federal e do Estado Fictício ---")
+
+tabelaHash.imprimir()
